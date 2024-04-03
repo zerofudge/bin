@@ -1,0 +1,4 @@
+run_segment() {
+  echo "🎧 $(head /tmp/headset-lvl)"
+  return 0
+}

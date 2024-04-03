@@ -1,0 +1,6 @@
+ldapsearch -h ldap.pb.local -p 389 -x -b "dc=profitbricks,dc=com" "(&(objectclass=posixAccount)(uid=$1))" sshPublicKey | awk ' \
+       BEGIN { go=0 } \
+       /^sshPublicKey:/ { go=1 } \
+       /# search result|^$/ { go=0; next } \
+       go { sub(/^(sshPublicKey:)? /,""); printf $0 } \
+       END { print "" }'

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+kubectl proxy >/dev/null &
+PID=$!
+
+TMPF=/tmp/$(date +%s)
+trap "rm -f ${TMPF} && kill ${PID}" EXIT
+
+kubectl delete ns $1 >/dev/null &
+
+if kubectl get ns $1 > /dev/null; then
+  kubectl get ns $1 -o json |jq '.spec.finalizers=[]' > $TMPF
+  curl -sk -H "Content-Type: application/json" -X PUT --data-binary @${TMPF} 127.0.0.1:8001/api/v1/namespaces/${1}/finalize > /dev/null
+fi
+
+echo "namespace $1 gone"

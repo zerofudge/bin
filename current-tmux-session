@@ -1,0 +1,5 @@
+tty=$(tty)
+
+for s in $(tmux list-sessions -F '#{session_name}'); do
+    tmux list-panes -F '#{pane_tty} #{session_name}' -t "$s"
+done | grep "${tty}" | awk '{print $2}'

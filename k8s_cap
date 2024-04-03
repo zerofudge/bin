@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo -n "Cluster is at "
+i=0; s=0; c=0; for i in $(kubectl describe node |grep "Non-terminated Pods:"|awk '{print $3}'|sed 's/(//g'); do s=$(($s+$i)); c=$(($c+1)); done; echo -n $((($s*100)/($c*110)))
+echo "% capacity"

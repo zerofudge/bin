@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+unset i; for i in $(docker images|grep -w none|awk '{print $3}'); do docker rmi $i; done; unset i;
+
+IID=$(docker images -q|head -1)
+CID=$(docker run -dP $IID)
+
+if [ -z "$1" -o "$1" == 'sh' ]; then
+    docker exec -ti $CID bash
+elif [ "$1" == 'log' ]; then
+    sleep 15
+    docker exec $CID cat /var/log/mice/application.log > ~/Desktop/foo.log
+fi
+
+wait
+
+docker stop $CID
+docker rm $CID
+
+echo done
