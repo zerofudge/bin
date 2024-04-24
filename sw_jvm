@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+#source me
+export JAVA_HOME=$(/usr/libexec/java_home -v$*)
+export PATH=$JAVA_HOME/bin:$PATH

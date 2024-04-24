@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+sed -i '/<!--- Helm Chart Configuration --->/,$d' README.md
+docker pull registry.code.syseleven.de/syseleven/building-blocks/images/helm-chart-configuration-docs:latest
+docker run "$@" -v $(pwd):/chart-docs/data registry.code.syseleven.de/syseleven/building-blocks/images/helm-chart-configuration-docs:latest \
+   generate-docs data >> README.md
