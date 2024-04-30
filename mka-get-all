@@ -4,7 +4,7 @@ set -euo pipefail
 
 # apt install gitlab-cli
 GLAB='python-gitlab'
-WORKDIR="${HOME}/work/src/mka2/lib"
+WORKDIR="${HOME}/work/src/mka2"
 
 all-projects() {
   for p in $($GLAB group-project list --all --group-id "$2"|sed '/^\s*$/d'|sed 's/id:\s*//'); do
@@ -13,20 +13,46 @@ all-projects() {
   if [ ! -d "./${prj}" ]; then
     echo "cloning ${1}/${prj} into $(pwd)"
     git clone "git@mka.git.syseleven.de:mka/${1}/${prj}.git"
+  else
+    echo "${1}/${prj} already present in $(pwd)"
   fi
   done
 }
 
 ### main ###
-which "$GLAB" >/dev/null || exit 1
+which "$GLAB" >/dev/null || (echo "install gitlab cli via: apt install gitlab-cli"; exit 1)
 
-
-# clone missing projects in /lib
-cd "$WORKDIR"
+# clone missing projects in lib
+cd "$WORKDIR/lib"
 all-projects "lib" 9
 cd - >/dev/null
 
-# clone missing projects in /lib/ctrl
-cd "$WORKDIR/ctrl"
+# clone missing projects in lib/ctrl
+cd "$WORKDIR/lib/ctrl"
 all-projects "lib/controllers" 12
+cd - >/dev/null
+
+# clone missing projects in lib/ctrl/delivery
+cd "$WORKDIR/lib/ctrl/delivery"
+all-projects "lib/controllers/delivery" 1690
+cd - >/dev/null
+
+# clone missing projects in lib/ctrl/sscm
+cd "$WORKDIR/lib/ctrl/sscm"
+all-projects "lib/controllers/sscm" 13
+cd - >/dev/null
+
+# clone missing projects in templates/golang
+cd "$WORKDIR/templates/golang"
+all-projects "lib/controllers" 4542
+cd - >/dev/null
+
+# clone missing projects in catalogue
+cd "$WORKDIR/catalogue"
+all-projects "catalogue" 8
+cd - >/dev/null
+#
+# clone missing projects in infrastructure
+cd "$WORKDIR/infra"
+all-projects "infrastructure" 14
 cd - >/dev/null
