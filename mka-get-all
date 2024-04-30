@@ -8,14 +8,14 @@ WORKDIR="${HOME}/work/src/mka2"
 
 all-projects() {
   for p in $($GLAB group-project list --all --group-id "$2"|sed '/^\s*$/d'|sed 's/id:\s*//'); do
-  prj=$($GLAB project get --id "$p" | grep -e '^path:'|awk '{print $2}')
+    prj=$($GLAB project get --id "$p" | grep -e '^path:'|awk '{print $2}')
 
-  if [ ! -d "./${prj}" ]; then
-    echo "cloning ${1}/${prj} into $(pwd)"
-    git clone "git@mka.git.syseleven.de:mka/${1}/${prj}.git"
-  else
-    echo "${1}/${prj} already present in $(pwd)"
-  fi
+    if [ ! -d "./${prj}" ]; then
+      echo "cloning ${1}/${prj} into $(pwd)"
+      git clone "git@mka.git.syseleven.de:mka/${1}/${prj}.git"
+    else
+      echo "${1}/${prj} already present in $(pwd)"
+    fi
   done
 }
 
