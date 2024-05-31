@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+
+# set desktop background from one of the background images
+
+MAX=$(ls "$HOME"/Pictures/bg[0-9]*.* |wc -w)
+NUM="$(( RANDOM % MAX ))"
+
+feh --bg-scale ~/Pictures/bg${NUM}.jpg >/dev/null 2>&1 
