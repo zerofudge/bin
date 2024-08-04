@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"net/url"
+	"os"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func main() {
 		panic("file must not be omitted")
 	}
 
-	dat, err := ioutil.ReadFile(*file)
+	dat, err := os.ReadFile(*file)
 	if err != nil {
 		panic(err)
 	}

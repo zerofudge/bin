@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+java -cp $HOME/lib/bsh-2.0b1.jar:/neofonie/home/frankg/current/tsc/lib/basic_infrastructure-0.8.1.2-SNAPSHOT.jar:$CLASSPATH bsh.Interpreter

@@ -1,0 +1,27 @@
+#!/usr/bin/env groovy
+
+// this is for evaluating the numbers from the jmeter kpi measurements
+
+int avg = 0, mavg = 0, min = 0, max = 0, cnt = 0
+String fileName = args? args.first() : null
+
+if (!fileName) {
+    println "Usage: <cmd> <file>"
+    System.exit 1
+}
+
+File file = new File(fileName)
+if (!file || !file.exists()) {
+    println "no such file: $fileName"
+    System.exit 2
+}
+
+file.text?.split(/\n/)?.each {
+    int val = it.toInteger()
+    avg += val; cnt++
+    mavg = ((mavg ?: val) + val)/2
+    min = Math.min(min ?: val, val)
+    max = Math.max(max ?: val, val)
+}
+
+println "samples: ${cnt}, average: ${avg/cnt}, moving average: ${mavg}, min: ${min}, max: ${max}"

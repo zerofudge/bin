@@ -1,0 +1,1 @@
+java -jar $HOME/work/lib/java/yuicompressor-2.4.2.jar "$@"

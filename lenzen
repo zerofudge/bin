@@ -1,0 +1,3 @@
+#!/bin/sh
+#rdesktop -g 1680x1050 -KLACEzP -x l -r sound:local lenzen
+rdesktop -g 1680x1050 -KLACEzP -x l -r sound:off lenzen &

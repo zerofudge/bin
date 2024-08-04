@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#pushd /home/frankg/work/sources/testspace/date &>/dev/null
+java -cp /infonie/home/frankg/work/sources/testspace/date UnixXReal "$@"
+#popd &>/dev/null

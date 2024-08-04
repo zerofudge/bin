@@ -1,0 +1,10 @@
+#!/bin/sh
+ls -l $HOME/var/lock/*.pid > /dev/null 2>&1
+
+if [ "$?" = "0" ]
+then
+	for i in $HOME/var/lock/*
+	do
+		kill `cat $i` && rm $i
+	done
+fi

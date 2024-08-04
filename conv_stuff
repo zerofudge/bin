@@ -1,0 +1,24 @@
+#! /usr/bin/env bash
+
+while getopts :d: name ; do
+	case $name in
+		d) DIR=$OPTARG;;
+		\?) echo "$0: unknown option -$OPTARG" > /dev/stderr; exit 1;;
+		\:) echo "$0: no parameter provided for option -$OPTARG" > /dev/stderr; exit 1;;
+	esac
+done
+
+if [ -z "${DIR}" ] ; then
+	echo "$0: please use -d option to provide a target dir"
+	exit 2
+fi
+
+for i in `/bin/ls ${DIR}` ; do
+	if [ -d ${DIR}/${i} ] ; then
+		conv_stuff -d ${DIR}/${i}
+	fi
+	NEWNAME=`echo $i | sed 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/' -`
+	mv ${DIR}/${i} ${DIR}/${NEWNAME}
+done
+
+

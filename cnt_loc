@@ -1,0 +1,3 @@
+#!/bin/sh
+
+NF=0;LOC=0;for i in $(find $1 -name '*.java' -follow);do LOC=$(($LOC+$(wc -l $i|awk '{print $1}')));NF=$(($NF+1));done;echo lines of code: $LOC, number classfiles: $NF

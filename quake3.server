@@ -1,0 +1,48 @@
+#!/bin/sh
+
+QUAKEDIR=/usr/local/games/quake3
+QUAKE=${QUAKEDIR}/q3ded
+VAR=/var/quake
+LOGS=${VAR}/logs
+LOCKS=${VAR}/lock
+IP=172.27.100.70
+
+
+ulimit -v unlimited
+
+export QUAKE QUAKEDIR
+
+#start jb and pong by default?
+startjb=0
+startpong=0
+startdefrag=0
+for i in $*; do
+  case $i in
+    -j) startjb=1; shift;;
+    -p) startpong=1; shift;;
+    -d) startdefrag=1; shift;;
+    -t) startctf=1; shift;;
+  esac
+done
+
+
+cd $QUAKEDIR
+
+
+$QUAKE +set sv_pure 1 +set fs_game osp +set fs_basepath ${QUAKEDIR} +set com_hunkmegs 64  +set vm_game 2 +cvar_restart +set logfile 3 +set dedicated 1 +sets gamestartup \"`date +"%D %T"`\" +set net_port 27960 +set net_ip ${IP} +exec etc/1v1.cfg +bot_enable 1 +g_gametype 1 +sv_maxclients 32 > ${LOGS}/server.log 2>&1 &
+echo $! > ${LOCKS}/1v1a.pid
+
+#$QUAKE +set sv_pure 1 +set fs_game osp +set fs_basepath ${QUAKEDIR} +set com_hunkmegs 64  +set vm_game 2 +cvar_restart +set logfile 3 +set dedicated 1 +sets gamestartup \"`date +"%D %T"`\" +set net_port 27961 +set net_ip ${IP} +exec etc/1v1.cfg +bot_enable 1 +g_gametype 1 +sv_maxclients 32 > ${LOGS}/server.log 2>&1 &
+#echo $! > ${LOCKS}/1v1b.pid
+
+#$QUAKE +set sv_pure 1 +set fs_game osp +set fs_basepath ${QUAKEDIR} +set com_hunkmegs 64  +set vm_game 2 +cvar_restart +set logfile 3 +set dedicated 1 +sets gamestartup \"`date +"%D %T"`\" +set net_port 27962 +set net_ip ${IP} +exec etc/1v1.cfg +bot_enable 1 +g_gametype 1 +sv_maxclients 32 > ${LOGS}/server.log 2>&1 &
+#echo $! > ${LOCKS}/1v1c.pid
+
+# threewave
+#$QUAKE +set fs_game threewave +set dedicated 1 +set net_port 27000 +set vm_game 2 +set vm_cgame 2 +set vm_ui 2 +exec default_server.cfg +exec portal.cfg > ${LOGS}/server.log 2>&1 &
+#echo $! > ${LOCKS}/tw.pid
+
+#$QUAKE +set com_hunkmegs 64 +set vm_game 0 +set fs_game arena +set sv_pure 0 +bot_enable 0 +set dedicated 1 +set net_port 27960 +exec server.cfg > ${LOGS}/server.log 2>&1 &
+echo $! > ${LOCKS}/arena.pid
+
+

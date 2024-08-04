@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+
+echo Starting blastd...
+/infonie/projekte/senat/demo/contrib/blastd-d-0-1-9/build_Linux/src/cpp/blastd -c /opt/infonie-search/engine/examples/etc/blastd.xml
+echo done

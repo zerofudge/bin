@@ -1,0 +1,4 @@
+#!/bin/sh
+
+_CLASSPATH=.:/usr/java/jars/jmk.jar
+java -cp $_CLASSPATH edu.neu.ccs.jmk.Make -w "$@"

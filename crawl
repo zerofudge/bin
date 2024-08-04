@@ -1,0 +1,9 @@
+CLASSPATH='.'
+BASEDIR="$HOME/work/lib/crawljax"
+for i in $(ls $BASEDIR); do 
+    CLASSPATH="${CLASSPATH}:${BASEDIR}/${i}"
+done
+
+export CLASSPATH
+java com.crawljax.cli.JarRunner $@
+

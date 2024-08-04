@@ -1,0 +1,2 @@
+#!/bin/sh
+CURR="$HOME/current/docs/status/daily_$(date +%d%m%y).txt"; cp $(ls -tr $HOME/current/docs/status/daily_*txt|tail -1) $CURR; rm $HOME/curr_daily 2>/dev/null; ln -s $CURR $HOME/curr_daily; vi $CURR

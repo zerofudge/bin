@@ -1,0 +1,5 @@
+#! /bin/sh
+cd /usr/local/zope/var/
+showRHits > ~/rhits
+cd
+tail rhits

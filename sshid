@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if test -z "${ARGUMENTS}" ; then SERVER=nexus ; else SERVER=${*} ; fi
+
+IDENTITY_PATH=/home/frank/.ssh
+IDENTITY_FILE=identity
+
+IDENTITY=${IDENTITY_PATH}/${IDENTITY_FILE}
+
+if test -e ${IDENTITY} ;
+	then ssh -i ${IDENTITY} ${SERVER} ;
+	else ssh ${SERVER} ;
+fi
+

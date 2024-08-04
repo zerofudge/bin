@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# check, if watched .met files change
+# by fudge
+
+while getopts :f: name ; do
+        case $name in
+                f) FILE=$OPTARG;;
+                \?) echo "$0: unknown option -$OPTARG" > /dev/stderr; exit 1;;
+                \:) echo "$0: no parameter provided for option -$OPTARG" > /dev/stderr; exit 1;;
+        esac
+done
+
+if [ -z "${FILE}" ] ; then
+        echo "$0: please use -f option to provide a target file"
+        exit 2
+fi
+
+SIZE=`du -k ${FILE} | awk '{print $1}'`
+
+while true ; do
+	sleep 60
+	NEWSIZE=`du -k ${FILE} | awk '{print $1}'`
+	if [ $NEWSIZE -gt ${SIZE} ] ; then
+		echo ${FILE} changed! new size is $NEWSIZE kB
+		./check_incoming -f ${FILE}
+	fi
+done

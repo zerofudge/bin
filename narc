@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DIR=$(dirname $0)
+for i in $DIR/.narc/*.jar; do
+ CP=$CP:$i
+done
+
+java -classpath $CP org.codenarc.CodeNarc $*

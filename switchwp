@@ -1,0 +1,23 @@
+#!/bin/bash
+if [ "$(basename ${0})" = "switchwp" ]
+  then quit=exit
+  else quit=return
+fi
+echo Switching working path to \'${1}\'
+read -p "Do you really want this (no) ? " answer
+if [ ! "${answer}" = "yes" ] ; then eval "$quit" ; fi
+
+if [ "${quit}" = "exit" ] ; then 
+  echo ''
+  echo But it makes no sense exporting variables into a subshell
+  echo and leaving it immediately. You better source this script.
+else
+  echo New working path is \'${1}\'
+fi
+
+export WORK_PATH=${1}
+export BUILD_PATH=${WORK_PATH}/build
+export CLASSES_PATH=${WORK_PATH}/build
+export SOURCES_PATH=${WORK_PATH}/sources
+export PROJECTS_PATH=${WORK_PATH}/projects
+export JARS_PATH=${WORK_PATH}/jars

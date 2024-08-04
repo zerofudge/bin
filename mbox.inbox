@@ -1,0 +1,3 @@
+#!/bin/sh
+export MAIL=$HOME/evolution/local/Inbox/mbox
+wmpop -name Inbox &>/dev/null &

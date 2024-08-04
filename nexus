@@ -1,0 +1,1 @@
+rdesktop -u fudge -p taxman -g 1280x1024 -BDK -T nexus -x b -z -r sound:local 172.27.112.1 &

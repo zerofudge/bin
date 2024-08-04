@@ -1,0 +1,4 @@
+# new
+sudo killall -HUP mDNSResponder
+# old
+sudo dscacheutil -flushcache

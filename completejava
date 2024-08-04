@@ -1,0 +1,36 @@
+#!/bin/bash
+. ${WORK_PATH}/bin/setenvironment
+
+LAST=$(echo ${@} | awk '{ print $NF }')
+if [ "$LAST" = 'java' ] ; then LAST=$(echo ${@} | awk '{ NF=NF-1 ; print $NF }') ; fi
+
+cd ${CLASSES_PATH}
+for suffix in $(echo $LAST | tr '.' ' ') ; do
+  cd $suffix 2> /dev/null || break
+  prefix=$prefix/$suffix
+  suffix=''
+done
+
+prefix=$(echo $prefix | sed 's/^\///g')
+if [ ! -z "$prefix" ] ; then
+  prefix="$prefix/"
+  prefix=$(echo $prefix | sed 's/\//\\\//g')
+fi
+#echo PREFIX="$prefix"
+#echo SUFFIX="$suffix"
+
+function findclasses () {
+find . -name "*.class" -o -type d -maxdepth ${1} |\
+ grep "^./$suffix" |\
+ grep -v '\$' |\
+ sed "s/^\.\//${prefix}/g" |\
+ sed "s/.*/&\//g" |\
+ sed 's/\.class\///g' |\
+ grep -v '\.' |\
+ sed 's/\//\./g'
+}
+
+WORDS=$(findclasses 1)
+if [ $[ $(echo $WORDS | wc -w) == 1] = 1 ] ; then WORDS=$(findclasses 2) ; fi
+
+echo $WORDS | tr ' ' '\n'

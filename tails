@@ -1,0 +1,7 @@
+#!/bin/sh
+
+root-tail -g 121x45+49+55 /var/log/messages,green &
+root-tail -g 93x47-0+50 /var/log/XFree86.0.log,yellow &
+root-tail -g 84x25-2-17 /home/frank/.xsession-errors,blue &
+root-tail -g 120x27+0-12 /var/log/kern.log &
+

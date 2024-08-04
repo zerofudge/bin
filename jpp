@@ -1,0 +1,3 @@
+#!/bin/bash
+
+a2ps -M a4dj -r -2 -j -f 6 -g -E Java --strip-level=2 --prologue=color $1

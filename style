@@ -1,0 +1,3 @@
+#!/bin/sh
+
+astyle --style=java --mode=java --indent=tab=4 $@
